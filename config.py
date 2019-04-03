@@ -1,4 +1,4 @@
-from os import getenv, environ
+from os import getenv
 
 class Config(object):
   """App base congiguration"""
