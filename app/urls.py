@@ -43,4 +43,4 @@ def getArticleURLS(base_url, headers):
                 '/News/Insight/688338-','/News/World/688340-','/News/photos/3286528-']
     result_list = [row for row in url_links if not any(p in row for p in patterns)]
 
-    return json.dumps(result_list)
+    return result_list
