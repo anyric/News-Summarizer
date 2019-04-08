@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  
+{% endblock %}
+
+{% block content %}
+  <div class="container my-5" style="width: 60%;">
+      <h2 class="my-3 mr-2 font-weight-light text-center text-muted" for="inlineFormCustomSelectPref">Summarization Models</h2>
+    <form method="post" action="/summarizer">
+      <div class="form-group">
+        <select class="custom-select mb-3 mr-sm-2" id="model" name="model">
+          <option value="summariseArtcle" selected>Frequency Distribution</option>
+          <option value="lsaTextSummarizer">Latent Semantic Analysis</option>
+          <option value="textRankSummarizer">Text Rank</option>
+        </select>
+        <textarea class="form-control mb-3" id="post" name="post" rows="5" placeholder="Enter Text here" required="True"></textarea>
+        <button type="reset" class="btn btn-outline-info my-1">Clear</button>
+        <button type="submit" class="btn btn-outline-info my-1">Summarize</button>
+      </div>
+    </form>
+  </div>
+  <div class="row my-5">
+    <div class="container col-6 mt-5">
+      {% if posts['Original'] %}
+        <h5 class="card-title ml-5 mt-5 mb-4 text-muted">Your Text</h5>
+          <p class="card-text font-weight-light text-break ml-5 my-2">
+            {{ posts['Original'] }}
+          </p>
+      {% endif %}
+    </div>
+    <div class="container mr-5 pt-3" style="max-width: 35rem; max-height: 40rem;">
+      {% if posts['Summary'] %}
+        <h5 class="card-title ml-2 mt-5 text-muted">Summary Extract</h5>
+        <div class="card-body font-weight-light">
+          {% for post in posts['Summary'] %}
+            {% for p in post %}
+              <p class="card-text font-weight-light text-break ml-5 my-2">
+                {{p}}
+              </p>
+            {% endfor %}
+          {% endfor %}
+        </div>
+      {% endif %}
+    </div>
+  </div>
+  <hr/>
+{% endblock %}

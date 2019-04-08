@@ -1,4 +1,5 @@
 import requests
+import time
 import json
 import pandas as pd
 from collections import OrderedDict
@@ -35,6 +36,7 @@ def getArticleURLS(base_url, headers):
             clean_urls = ['https://www.monitor.co.ug' + link for link in clean_links if not 'https://www.monitor.co.ug' in link]
             cleaned_links = list(OrderedDict.fromkeys(clean_urls))
             url_links += cleaned_links
+            time.sleep(2)
         except requests.exceptions.ConnectionError as error:
             return error
 
