@@ -2,7 +2,10 @@ import os
 import requests
 import json
 import time
-from datetime import date
+import nltk
+from datetime import date, timedelta
+from apscheduler.scheduler import Scheduler
+from apscheduler.events import EVENT_JOB_ERROR
 import pandas as pd
 from flask import render_template, request, redirect
 from app import create_app
@@ -18,20 +21,36 @@ main_url = 'https://www.monitor.co.ug'
 news_url = 'https://www.monitor.co.ug/News/688324-688324-156c2gl/index.html'
 headers = {'User-Agent': 'Mozilla/5.0 (Macintosh; Intel Mac OS X 10_13_6) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/71.0.3578.98 Safari/537.36'}
 base_url = [main_url, news_url]
+nltk.download('punkt')
 urls = pd.DataFrame()
 data = pd.DataFrame()
+sched = Scheduler(daemon=True)
+sched.start()
+img =[]
+today = date.today()
+yesterday = today - timedelta(days = 1)
 
 @app.route('/', methods=['GET'])
+def loader():
+    """Todoy inBrief page loader """
+    cron_job()
+    return render_template('temp.html')
+
+@app.route('/index', methods=['GET'])
 def index():
     """Default app home page displaying summary articles"""
-    if os.path.isfile('./app/databases/posts-' + str(date.today()) + '.csv'):
-      normalized = pd.read_csv("./app/databases/posts-" + str(date.today()) + ".csv")
-    elif os.path.isfile('./app/databases/posts-2019-04-17.csv'):
-      normalized = pd.read_csv("./app/databases/posts-2019-04-17.csv")
-      normalized = normalized.drop_duplicates('Titles', keep='first')
+    
+    if os.path.isfile('./app/databases/posts-' + str(today) + '.csv'):
+        normalized = pd.read_csv("./app/databases/posts-" + str(today) + ".csv")
+        normalized = normalized.drop_duplicates('Titles', keep='first')
+        img.append('/static/img-' + str(today))
+    elif os.path.isfile('./app/databases/posts-' + str(yesterday) + '.csv'):
+        normalized = pd.read_csv("./app/databases/posts-" + str(yesterday) + ".csv")
+        normalized = normalized.drop_duplicates('Titles', keep='first')
+        img.append('/static/img-' + str(yesterday))
     else:
-      getAllArticles(base_url,headers)
-      normalized = pd.read_csv("./app/databases/posts-" + str(date.today()) + ".csv")
+      return render_template('temp.html')
+
     normalized = normalized.dropna()
     normalized_text = normalizeText(normalized["Articles"])
 
@@ -45,8 +64,11 @@ def index():
     cluster = classifyArticles(data['Summaries'])
     data['Cluster'] = cluster
     articles= data.sort_values(by=['Cluster'])
-  
-    return render_template('index.html', data=articles)
+    
+    img.append(data.loc[0:2]['Titles'][0])
+    img.append(data.loc[0:2]['Titles'][1])
+    img.append(data.loc[0:2]['Titles'][2])
+    return render_template('index.html', data=articles, image=img)
 
 @app.route('/summarizer', methods=['POST','GET'])
 def compare():
@@ -69,23 +91,14 @@ def compare():
     posts = {"Original": None, "Summary": None}
     return render_template('summarizer.html', posts=posts)
 
-@app.route('/urls')
-def get_urls():
-  """Get all headline urls from site base url"""
-
-  urls_list = getArticleURLS(base_url,headers)
-  urls["Urls"] = urls_list
-  return json.dumps(urls_list)
-
-@app.route('/article/<id>', methods=['GET'])
+@app.route('/article/<int:id>', methods=['GET'])
 def get_summary(id):
     """Gets an article based on the id """
-    index = int(id)
 
     if len(data) < 1:
-      return redirect('/',code=302)
+      return redirect('/index',code=302)
 
-    article = data.loc[index]
+    article = data.loc[id]
 
     return render_template('compare.html', data=article)
 
@@ -95,6 +108,15 @@ def about():
     
     return render_template('about.html')
 
+@sched.interval_schedule(seconds=5)
+def cron_job():
+  if not os.path.isfile('./app/databases/posts-' + str(today) + '.csv'):
+    getAllArticles(base_url,headers)
+
+def job_listener(event):
+    if event.exception:
+        time.sleep(3)
+        cron_job()
 
 if __name__ == "__main__":
     app.run()

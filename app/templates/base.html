@@ -1,36 +1,28 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <link rel="stylesheet" href="{{url_for('static', filename='bootstrap.min.css') }}">
-<style>
-    .site-header {
-      background-color: rgba(0, 0, 0, .85);
-      max-height: 50px;
-      -webkit-backdrop-filter: saturate(180%) blur(20px);
-      backdrop-filter: saturate(180%) blur(20px);
-    }
-    .site-header a {
-      color: #999;
-      transition: ease-in-out color .15s;
-      text-decoration: none
-    }
-    .site-header a:hover {
-      color: #fff;
-      text-decoration: none;
-    }
-</style>
-<nav class="site-header sticky-top py-1">
-  <div class="container d-flex flex-column flex-md-row justify-content-between">
-    <a class="py-2" href="/">
-      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="d-block mr-2 float-left" role="img" viewBox="0 0 24 24" focusable="false"><title>Today in Brief</title><circle cx="12" cy="12" r="10"/><path d="M14.31 8l5.74 9.94M9.69 8h11.48M7.38 12l5.74-9.94M9.69 16L3.95 6.06M14.31 16H2.83m13.79-4l-5.74 9.94"/></svg>
-      Today inBrief
+<link href="//netdna.bootstrapcdn.com/bootstrap/3.0.0/css/bootstrap-glyphicons.css" rel="stylesheet">
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.0/jquery.min.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.1.0/js/bootstrap.min.js"></script>
+
+<nav class="navbar navbar-expand-lg navbar-dark bg-dark sticky-top">
+  <div class="container">
+    <a class="navbar-brand d-inline-block align-top" href="/index">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="mr-0 float-left d-inline-block align-top" role="img" viewBox="0 0 24 24" focusable="false"><circle cx="12" cy="12" r="10"/><path d="M14.31 8l5.74 9.94M9.69 8h11.48M7.38 12l5.74-9.94M9.69 16L3.95 6.06M14.31 16H2.83m13.79-4l-5.74 9.94"/></svg>
     </a>
-    <a class="py-2 d-none d-md-inline-block" href="#"></a>
-    <a class="py-2 d-none d-md-inline-block" href="#"></a>
-    <a class="py-2 d-none d-md-inline-block" href="#"></a>
-    <a class="py-2 d-none d-md-inline-block" href="#"></a>
-    <a class="py-2 d-none d-md-inline-block" href="#"></a>
-    <a class="py-2 d-none d-md-inline-block" href="#"></a>
-    <a class="py-2 d-none d-md-inline-block" href="/">Home</a>
-    <a class="py-2 d-none d-md-inline-block" href="/summarizer">Summarizer</a>
-    <a class="py-2 d-none d-md-inline-block" href="/about">About</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarText" aria-controls="navbarText" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="navbarText" role="navigation">
+        <div class="navbar-nav ml-0">
+          <a href="#" class="nav-item nav-link active">Today inBrief</a>
+        </div>
+        <div class="navbar-nav ml-auto">
+          <a class="nav-item nav-link" href="/index">Home</a>
+          <a class="nav-item nav-link" href="/summarizer">Summarizer</a>
+          <a class="nav-item nav-link" href="/about">About</a>
+        </div>
+    </div>
   </div>
 </nav>
 
