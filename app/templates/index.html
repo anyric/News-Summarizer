@@ -1,20 +1,57 @@
 {% extends 'base.html' %}
 
 {% block header %}
+  <div id="loader"></div>
 
-  <div class="position-relative overflow-hidden p-3 p-md-5 text-center bg-light"
-        style="margin-right: 0px; margin-left: 0px; background-image:url(static/news.png); 
-        background-repeat: no-repeat; background-size: cover;">
-    <div class="col-md-5 p-lg-5 mx-auto my-5">
-      <h1 class="display-4 font-weight-normal text-white">Today inBrief</h1>
-      <p class="lead font-weight-normal text-white py-4">Aways be the first to know with just a few lines of summary from the dossier.</p>
-      <!-- <a class="btn btn-outline-warning text-white" style="background-color:transparent" href="#">View more</a> -->
+  <div id="image" class="carousel slide" data-ride="carousel">
+      <ol class="carousel-indicators">
+          <li data-target="#image" data-slide-to="0" class="active"></li>
+          <li data-target="#image" data-slide-to="1"></li>
+          <li data-target="#image" data-slide-to="2"></li>
+        </ol>
+    <div class="carousel-inner">
+      <div class="carousel-item active">
+        <img class="d-block" src="{{image[0]}}/post0.png" style="width: 100%; max-height: 80%" alt="{{image[1]}}">
+        <div class="carousel-caption d-none d-md-block align-middle">
+            <a href="#headline" class="btn border-info btn-lg w-25 h-10 mb-5">
+              <span class="glyphicon glyphicon-chevron-down text-white" style="font-size:20px;"></span>
+            </a>
+            <h1 class="display-5 font-weight-normal text-white">{{image[1]}}</h1>
+            <p class="lead font-weight-normal text-white py-4">
+                <img src="/static/dm.png" style="max-width: 15px; max-height: 35px;"> Daily Monitor
+            </p>
+        </div>
+      </div>
+      <div class="carousel-item">
+          <img class="d-block" src="{{image[0]}}/post1.png" style="width: 100%; max-height: 80%" alt="{{image[2]}}">
+          <div class="carousel-caption d-none d-md-block">
+              <a href="#headline" class="btn border-info btn-lg w-25 h-10 mb-5">
+                <span class="glyphicon glyphicon-chevron-down text-white" style="font-size:20px;"></span>
+              </a>
+              <h1 class="display-5 font-weight-normal text-white">{{image[2]}}</h1>
+              <p class="lead font-weight-normal text-white py-4">
+                  <img src="/static/dm.png" style="max-width: 15px; max-height: 35px;"> Daily Monitor
+                </p>
+          </div>
+      </div>
+      <div class="carousel-item">
+        <img class="d-block" src="{{image[0]}}/post2.png" style="width: 100%; max-height: 80%" alt="{{image[3]}}">
+        <div class="carousel-caption d-none d-md-block">
+            <a href="#headline" class="btn border-info btn-lg w-25 h-10 mb-5">
+              <span class="glyphicon glyphicon-chevron-down text-white" style="font-size:20px;"></span>
+            </a>
+            <h1 class="display-5 font-weight-normal text-white">{{image[3]}}</h1>
+            <p class="lead font-weight-normal text-white py-4">
+              <img src="/static/dm.png" style="max-width: 15px; max-height: 35px;"> Daily Monitor
+            </p>
+        </div>
+      </div>
     </div>
   </div>
 {% endblock %}
 
 {% block content %}
-  <div class="position-relative overflow-hidden p-3 mx-3 my-3 bg-light">
+  <div id="headline" class="position-relative overflow-hidden p-3 mx-3 my-3 bg-light">
       <div class="card-columns">
         {% for index, post in data.iterrows() %}
           <a class="text-dark" href="/article/{{ index }}">
@@ -28,7 +65,6 @@
                       <img src="/static/dm.png" class="mb-2 mr-1 float-left" style="max-width: 15px; max-height: 35px;"> Daily Monitor
                     </p>
                   </small>
-                <!-- <p><small class="btn-outline-info">read more...</small></p> -->
               </div>
             </div>
           </a>
