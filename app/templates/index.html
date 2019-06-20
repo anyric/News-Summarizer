@@ -1,6 +1,6 @@
 {% extends 'base.html' %}
 
-{% block header %}
+{% block content %}
   <div id="loader"></div>
 
   <div id="image" class="carousel slide" data-ride="carousel">
@@ -48,9 +48,7 @@
       </div>
     </div>
   </div>
-{% endblock %}
 
-{% block content %}
   <div id="headline" class="position-relative overflow-hidden p-3 mx-3 my-3 bg-light">
       <div class="card-columns">
         {% for index, post in data.iterrows() %}

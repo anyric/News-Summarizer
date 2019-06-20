@@ -34,7 +34,7 @@ yesterday = today - timedelta(days = 1)
 def loader():
     """Todoy inBrief page loader """
     cron_job()
-    return render_template('temp.html')
+    return render_template('temp.html', title="Loader")
 
 @app.route('/index', methods=['GET'])
 def index():
@@ -49,7 +49,7 @@ def index():
         normalized = normalized.drop_duplicates('Titles', keep='first')
         img.append('/static/img-' + str(yesterday))
     else:
-      return render_template('temp.html')
+      return render_template('temp.html', title="Loader")
 
     normalized = normalized.dropna()
     normalized_text = normalizeText(normalized["Articles"])
@@ -68,7 +68,7 @@ def index():
     img.append(data.loc[0:2]['Titles'][0])
     img.append(data.loc[0:2]['Titles'][1])
     img.append(data.loc[0:2]['Titles'][2])
-    return render_template('index.html', data=articles, image=img)
+    return render_template('index.html', data=articles, image=img, title="Home")
 
 @app.route('/summarizer', methods=['POST','GET'])
 def compare():
@@ -89,7 +89,7 @@ def compare():
     
         return render_template('summarizer.html', posts=posts)
     posts = {"Original": None, "Summary": None}
-    return render_template('summarizer.html', posts=posts)
+    return render_template('summarizer.html', posts=posts, title="Summarizer")
 
 @app.route('/article/<int:id>', methods=['GET'])
 def get_summary(id):
@@ -100,13 +100,13 @@ def get_summary(id):
 
     article = data.loc[id]
 
-    return render_template('compare.html', data=article)
+    return render_template('compare.html', data=article, title="Article")
 
 @app.route('/about', methods=['GET'])
 def about():
     """Describes Todoy inBrief """
     
-    return render_template('about.html')
+    return render_template('about.html', title="About")
 
 @sched.interval_schedule(seconds=5)
 def cron_job():
