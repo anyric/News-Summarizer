@@ -1,0 +1,39 @@
+{% extends 'base.html' %}
+
+{% block header %}
+
+  <div class="position-relative overflow-hidden p-3 p-md-5 text-center bg-light"
+        style="margin-right: 0px; margin-left: 0px; background-image:url(static/news.png); 
+        background-repeat: no-repeat; background-size: cover;">
+    <div class="col-md-5 p-lg-5 mx-auto my-5">
+      <h1 class="display-4 font-weight-normal text-white">Today inBrief</h1>
+      <p class="lead font-weight-normal text-white py-4">Aways be the first to know with just a few lines of summary from the dossier.</p>
+      <!-- <a class="btn btn-outline-warning text-white" style="background-color:transparent" href="#">View more</a> -->
+    </div>
+  </div>
+{% endblock %}
+
+{% block content %}
+  <div class="position-relative overflow-hidden p-3 mx-3 my-3 bg-light">
+      <div class="card-columns">
+        {% for index, post in data.iterrows() %}
+          <a class="text-dark" href="/article/{{ index }}">
+            <div class="card">
+                <div class="card-body">
+                  <img src="{{ post['Images'] }}" 
+                    class="rounded float-left mb-2 mr-2" style="max-width: 180px; max-height: 185px;">
+                  <small class="card-title text-left mx-2">
+                    <p>{{ post['Titles'] }}</p>
+                    <p>
+                      <img src="/static/dm.png" class="mb-2 mr-1 float-left" style="max-width: 15px; max-height: 35px;"> Daily Monitor
+                    </p>
+                  </small>
+                <!-- <p><small class="btn-outline-info">read more...</small></p> -->
+              </div>
+            </div>
+          </a>
+        {% endfor %}
+      </div>
+  </div>
+  <hr/>
+{% endblock %}

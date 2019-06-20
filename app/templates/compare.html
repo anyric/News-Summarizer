@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block header %}
+  
+{% endblock %}
+
+{% block content %}
+  <div class="row my-5">
+      <div class="container col-6 mt-5">
+          <h4 class="card-title ml-1 font-weight-bold">{{ data['Titles'] }}</h4>
+          <small class="card-link">
+            <img src="/static/dm.png" class="mb-2" style="max-width: 15px; max-height: 35px;"> Daily Monitor
+          </small>
+          <img class="card-img-top rounded img-fluid my-3" src="{{ data['Images'] }}" alt="Card image cap"
+            style="max-width: 841; max-height: 508;">
+          <p class="card-text font-weight-light text-break my-2">
+              {{ data['Articles'] }}
+              <a href="{{ data['Urls'] }}"><small class="card-link btn-outline-info">source: Daily Monitor</small></a>
+          </p>
+      </div>
+      <div class="container mr-5 mt-5 pt-3" style="max-width: 35rem; max-height: 40rem;">
+          <h5 class="card-title ml-3 mt-5 text-muted">Summary Extract</h5>
+          <div class="card-body">
+            {% for p in data['Summaries'] %}
+              <p class="card-text font-weight-light"> {{ p }}</p>
+            {% endfor %}
+            <a class="btn btn-outline-info" href="/"><small class="card-link">read more...</small></a>
+          </div>
+          
+        </div>
+  </div>
+  <hr/>
+{% endblock %}

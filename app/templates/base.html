@@ -1,0 +1,49 @@
+<link rel="stylesheet" href="{{url_for('static', filename='bootstrap.min.css') }}">
+<style>
+    .site-header {
+      background-color: rgba(0, 0, 0, .85);
+      max-height: 50px;
+      -webkit-backdrop-filter: saturate(180%) blur(20px);
+      backdrop-filter: saturate(180%) blur(20px);
+    }
+    .site-header a {
+      color: #999;
+      transition: ease-in-out color .15s;
+      text-decoration: none
+    }
+    .site-header a:hover {
+      color: #fff;
+      text-decoration: none;
+    }
+</style>
+<nav class="site-header sticky-top py-1">
+  <div class="container d-flex flex-column flex-md-row justify-content-between">
+    <a class="py-2" href="/">
+      <svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" class="d-block mr-2 float-left" role="img" viewBox="0 0 24 24" focusable="false"><title>Today in Brief</title><circle cx="12" cy="12" r="10"/><path d="M14.31 8l5.74 9.94M9.69 8h11.48M7.38 12l5.74-9.94M9.69 16L3.95 6.06M14.31 16H2.83m13.79-4l-5.74 9.94"/></svg>
+      Today inBrief
+    </a>
+    <a class="py-2 d-none d-md-inline-block" href="#"></a>
+    <a class="py-2 d-none d-md-inline-block" href="#"></a>
+    <a class="py-2 d-none d-md-inline-block" href="#"></a>
+    <a class="py-2 d-none d-md-inline-block" href="#"></a>
+    <a class="py-2 d-none d-md-inline-block" href="#"></a>
+    <a class="py-2 d-none d-md-inline-block" href="#"></a>
+    <a class="py-2 d-none d-md-inline-block" href="/">Home</a>
+    <a class="py-2 d-none d-md-inline-block" href="/summarizer">Summarizer</a>
+    <a class="py-2 d-none d-md-inline-block" href="/about">About</a>
+  </div>
+</nav>
+
+<section class="content">
+
+  {% block header %}{% endblock %}
+
+  {% block content %}{% endblock %}
+</section>
+<footer class="container py-2">
+  <div class="row">
+    <div class="col-12 col-md text-center">
+      <small class="d-block mb-3 text-secondary">&copy; 2019 Today inBrief. All rights reserved!</small>
+    </div>
+  </div>
+</footer>
