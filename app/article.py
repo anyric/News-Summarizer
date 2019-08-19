@@ -33,8 +33,8 @@ def getArticle(url, headers,image_name):
         os.mkdir(path)
 
     for p in article:
-        post += "".join(p.text.encode('ascii',errors='replace').replace(b'?', b' ').decode('utf8'))
-    
+        post += p.getText()
+
     for img in imgs:
         time.sleep(2)
         im_url = 'https://www.monitor.co.ug' + img.get('src')

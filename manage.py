@@ -26,7 +26,6 @@ urls = pd.DataFrame()
 data = pd.DataFrame()
 sched = Scheduler(daemon=True)
 sched.start()
-img =[]
 today = date.today()
 yesterday = today - timedelta(days = 1)
 
@@ -43,11 +42,9 @@ def index():
     if os.path.isfile('./app/databases/posts-' + str(today) + '.csv'):
         normalized = pd.read_csv("./app/databases/posts-" + str(today) + ".csv")
         normalized = normalized.drop_duplicates('Titles', keep='first')
-        img.append('/static/img-' + str(today))
     elif os.path.isfile('./app/databases/posts-' + str(yesterday) + '.csv'):
         normalized = pd.read_csv("./app/databases/posts-" + str(yesterday) + ".csv")
         normalized = normalized.drop_duplicates('Titles', keep='first')
-        img.append('/static/img-' + str(yesterday))
     else:
       return render_template('temp.html', title="Loader")
 
@@ -64,11 +61,8 @@ def index():
     cluster = classifyArticles(data['Summaries'])
     data['Cluster'] = cluster
     articles= data.sort_values(by=['Cluster'])
-    
-    img.append(data.loc[0:2]['Titles'][0])
-    img.append(data.loc[0:2]['Titles'][1])
-    img.append(data.loc[0:2]['Titles'][2])
-    return render_template('index.html', data=articles, image=img, title="Home")
+  
+    return render_template('index.html', data=articles, title="Home")
 
 @app.route('/summarizer', methods=['POST','GET'])
 def compare():
