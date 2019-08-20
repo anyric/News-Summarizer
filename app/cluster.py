@@ -83,7 +83,6 @@ from sklearn.metrics.pairwise import cosine_similarity
 
 def ward_hierarchical_clustering(posts):
     articles = []
-    # text = {}
     for post in posts:
         articles += post
         
@@ -96,8 +95,7 @@ def ward_hierarchical_clustering(posts):
     return linkage_matrix
 
 def loadModel():
-    # filename = 'km_model.sav'
-    km_model = pickle.load(open('./app/databases/model/km_model.sav', 'rb'))
+    km_model = pickle.load(open('./databases/model/km_model.sav', 'rb'))
 
     return km_model
 
@@ -109,8 +107,8 @@ def classifyArticles(posts):
     for post in posts:
         sents += [sent for sent in post]
         article = ' '.join(sent for sent in sents)
-        vector = pickle.load(open('./app/databases/model/km_vector.sav', 'rb'))
+        vector = pickle.load(open('./databases/model/km_vector.sav', 'rb'))
         data = vector.transform([article])
-        model = pickle.load(open('./app/databases/model/km_model.sav', 'rb'))
+        model = pickle.load(open('./databases/model/km_model.sav', 'rb'))
         cluster.append(model.predict(data)[0])
     return cluster

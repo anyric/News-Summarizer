@@ -25,12 +25,12 @@ def getArticle(url, headers,image_name):
     article = soup.select('section.body-copy > div > p')
     title = soup.title.text.encode('ascii',errors='replace').replace(b'?', b' ').decode('utf8')
     imgs = soup.findAll("img", {"class":"photo_article"})
-    img_name = './app/static/img-'+ str(date.today()) +'/' + image_name + '.png'
+    img_name = 'static/img-'+ str(date.today()) +'/' + image_name + '.png'
     post = ""
 
-    if not os.path.isdir('./app/static/img-' + str(date.today())):
-        path = './app/static/img-' + str(date.today())
-        os.mkdir(path)
+    if not os.path.isdir('static/img-' + str(date.today())):
+        path = 'static/img-' + str(date.today())
+        os.makedirs(path)
 
     for p in article:
         post += "".join(p.text.encode('ascii',errors='replace').replace(b'?', b' ').decode('utf8'))
@@ -40,7 +40,7 @@ def getArticle(url, headers,image_name):
         im_url = 'https://www.monitor.co.ug' + img.get('src')
         image = requests.get(im_url,headers=headers)
         open(img_name,'wb').write(image.content)
-    image = '/static/img-'+ str(date.today()) +'/' + image_name + '.png'
+    image = 'static/img-'+ str(date.today()) +'/' + image_name + '.png'
 
     return title, post, url, image
 
@@ -86,6 +86,7 @@ def getAllArticles(base_url,headers):
     if isinstance(links, list):
         posts = getMonitorArticles(links,headers)
         posts = posts.drop_duplicates(['Titles','Images'], keep='first')
+        print(os.listdir())
         posts.to_csv("./app/databases/posts-" + str(date.today()) + ".csv")
     else:
       time.sleep(3)
