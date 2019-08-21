@@ -9,7 +9,7 @@ from apscheduler.events import EVENT_JOB_ERROR
 import pandas as pd
 from flask import render_template, request, redirect
 from app import create_app
-from config import config, Config
+from app.config import config, Config
 from app.urls import getArticleURLS
 from app.article import getMonitorArticles, getAllArticles
 from app.clean_text import normalizeText
@@ -40,14 +40,14 @@ def loader():
 def index():
     """Default app home page displaying summary articles"""
     
-    if os.path.isfile('./app/databases/posts-' + str(today) + '.csv'):
-        normalized = pd.read_csv("./app/databases/posts-" + str(today) + ".csv")
+    if os.path.isfile('databases/posts-' + str(today) + '.csv'):
+        normalized = pd.read_csv("databases/posts-" + str(today) + ".csv")
         normalized = normalized.drop_duplicates('Titles', keep='first')
-        img.append('/static/img-' + str(today))
-    elif os.path.isfile('./app/databases/posts-' + str(yesterday) + '.csv'):
-        normalized = pd.read_csv("./app/databases/posts-" + str(yesterday) + ".csv")
+        img.append('static/img-' + str(today))
+    elif os.path.isfile('databases/posts-' + str(yesterday) + '.csv'):
+        normalized = pd.read_csv("databases/posts-" + str(yesterday) + ".csv")
         normalized = normalized.drop_duplicates('Titles', keep='first')
-        img.append('/static/img-' + str(yesterday))
+        img.append('static/img-' + str(yesterday))
     else:
       return render_template('temp.html', title="Loader")
 
@@ -65,9 +65,9 @@ def index():
     data['Cluster'] = cluster
     articles= data.sort_values(by=['Cluster'])
     
-    img.append(data.loc[0:2]['Titles'][0])
-    img.append(data.loc[0:2]['Titles'][1])
-    img.append(data.loc[0:2]['Titles'][2])
+    img.append(data.loc[1:3]['Titles'][1])
+    img.append(data.loc[1:3]['Titles'][2])
+    img.append(data.loc[1:3]['Titles'][3])
     return render_template('index.html', data=articles, image=img, title="Home")
 
 @app.route('/summarizer', methods=['POST','GET'])
@@ -110,7 +110,7 @@ def about():
 
 @sched.interval_schedule(seconds=5)
 def cron_job():
-  if not os.path.isfile('./app/databases/posts-' + str(today) + '.csv'):
+  if not os.path.isfile('databases/posts-' + str(today) + '.csv'):
     getAllArticles(base_url,headers)
 
 def job_listener(event):

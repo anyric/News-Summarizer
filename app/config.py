@@ -2,7 +2,7 @@ from os import getenv
 
 class Config(object):
   """App base congiguration"""
-  FLASK_ENV = getenv('FLASK_ENV', 'production')
+  FLASK_ENV = getenv('FLASK_ENV', 'develpoment')
   DEBUG = False
   TESTING = False
 
