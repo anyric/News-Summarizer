@@ -78,9 +78,9 @@ def lsaTextSummarizer(docs, num_sentences, num_topics=1, sv_threshold=0.5):
             min_sigma_value = max(s) * sv_threshold
 
             s[s < min_sigma_value] = 0
-            salience_scores = np.sqrt(np.dot(np.square(s), np.square(vt)))
+            sent_scores = np.sqrt(np.dot(np.square(s), np.square(vt)))
 
-            top_sentence_indices = salience_scores.argsort()[-num_sentences:][::-1]
+            top_sentence_indices = sent_scores.argsort()[-num_sentences:][::-1]
             top_sentence_indices.sort()
             summary = []
             for index in top_sentence_indices:

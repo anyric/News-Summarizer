@@ -6,7 +6,14 @@ import numpy as np
 import pickle
 
 def kMeansCluster(posts):
-    
+    """Classifies a given document and return the classified document.
+
+    Arguments:
+        text: the string or byte document to be classified
+
+    Return:
+        A dictionary of classified document
+    """
     articles = []
     text = {}
     for post in posts:
@@ -29,6 +36,14 @@ def kMeansCluster(posts):
     return vectorizer, X, km, text
 
 def affinityPropagationCluster(posts):
+    """Classifies a given document and return the classified document.
+
+    Arguments:
+        text: the string or byte document to be classified
+
+    Return:
+        A dictionary of classified document
+    """
     articles = []
     text = {}
     for post in posts:
@@ -54,6 +69,14 @@ def affinityPropagationCluster(posts):
     return text
 
 def agglomerativeCluster(posts):
+    """Classifies a given document and return the classified document.
+
+    Arguments:
+        text: the string or byte document to be classified
+
+    Return:
+        A dictionary of classified document
+    """
     articles = []
     text = {}
     for post in posts:
@@ -78,30 +101,22 @@ def agglomerativeCluster(posts):
             text[cluster] += oneArticle
     return text
 
-from scipy.cluster.hierarchy import ward, dendrogram
-from sklearn.metrics.pairwise import cosine_similarity
-
-def ward_hierarchical_clustering(posts):
-    articles = []
-    # text = {}
-    for post in posts:
-        articles += post
-        
-    vectorizer = TfidfVectorizer(max_df=0.5,min_df=2,stop_words='english')
-    ward_X = vectorizer.fit_transform(articles)
-    
-    cosine_distance = 1 - cosine_similarity(ward_X)
-    linkage_matrix = ward(cosine_distance)
-    
-    return linkage_matrix
-
 def loadModel():
-    # filename = 'km_model.sav'
+    """Loads the classification model for clustering new articles
+    """
     km_model = pickle.load(open('./app/databases/model/km_model.sav', 'rb'))
 
     return km_model
 
 def classifyArticles(posts):
+    """Classifies a given document and return the class.
+
+    Arguments:
+        text: the string or byte document to be classified
+
+    Return:
+        A list with document index and thier clusters
+    """
     article = ''
     sents = []
     cluster = []
