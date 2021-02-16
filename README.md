@@ -36,7 +36,7 @@ venv\Scripts\activate
 ```
 * Clone the project repo by running:
 ```
-git clone https://github.com/anyric/super-record.git
+git clone https://github.com/anyric/News-Summarizer.git
 ```
 ### Install  the application requirements
 ```

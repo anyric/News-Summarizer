@@ -46,7 +46,9 @@ def index():
         normalized = pd.read_csv("./app/databases/posts-" + str(yesterday) + ".csv")
         normalized = normalized.drop_duplicates('Titles', keep='first')
     else:
-      return render_template('temp.html', title="Loader")
+        normalized = pd.read_csv("./app/databases/posts-2019-05-23.csv")
+        normalized = normalized.drop_duplicates('Titles', keep='first')
+      # return render_template('temp.html', title="Loader")
 
     normalized = normalized.dropna()
     normalized_text = normalizeText(normalized["Articles"])
