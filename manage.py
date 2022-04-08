@@ -39,15 +39,15 @@ def loader():
 def index():
     """Default app home page displaying summary articles"""
     
-    if os.path.isfile('./app/databases/posts-' + str(today) + '.csv'):
-        normalized = pd.read_csv("./app/databases/posts-" + str(today) + ".csv")
-        normalized = normalized.drop_duplicates('Titles', keep='first')
-    elif os.path.isfile('./app/databases/posts-' + str(yesterday) + '.csv'):
-        normalized = pd.read_csv("./app/databases/posts-" + str(yesterday) + ".csv")
-        normalized = normalized.drop_duplicates('Titles', keep='first')
-    else:
-        normalized = pd.read_csv("./app/databases/posts-2019-05-23.csv")
-        normalized = normalized.drop_duplicates('Titles', keep='first')
+    # if os.path.isfile('./app/databases/posts-' + str(today) + '.csv'):
+    #     normalized = pd.read_csv("./app/databases/posts-" + str(today) + ".csv")
+    #     normalized = normalized.drop_duplicates('Titles', keep='first')
+    # elif os.path.isfile('./app/databases/posts-' + str(yesterday) + '.csv'):
+    #     normalized = pd.read_csv("./app/databases/posts-" + str(yesterday) + ".csv")
+    #     normalized = normalized.drop_duplicates('Titles', keep='first')
+    # else:
+    normalized = pd.read_csv("./app/databases/posts-2019-05-23.csv")
+    normalized = normalized.drop_duplicates('Titles', keep='first')
       # return render_template('temp.html', title="Loader")
 
     normalized = normalized.dropna()
